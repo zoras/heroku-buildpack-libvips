@@ -12,8 +12,8 @@ export SVG_VERSION=2.40.15
 export GIF_VERSION=5.1.4
 export BUILD_PATH=/tmp
 export OUT_PATH=$OUT_DIR/app/vendor/vips
-export PKG_CONFIG_PATH=$OUT_PATH/lib/pkgconfig:$PKG_CONFIG_PATH
-export PATH=$OUT_PATH/bin:$PATH
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$OUT_PATH/lib/pkgconfig
+export PATH=$PATH:$OUT_PATH/bin
 
 # Based on https://gist.github.com/chrismdp/6c6b6c825b07f680e710
 function putS3 {
