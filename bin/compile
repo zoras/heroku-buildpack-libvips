@@ -30,20 +30,20 @@ function vendor() {
   curl $binary -s -o - | tar xz -C $path -f -
 
   if [ -d "$path/bin" ]; then
-    export PATH=$path/bin:$PATH
+    export PATH=$PATH:$path/bin
   fi
 
   if [ -d "$path/lib/pkgconfig" ]; then
     # pkg-config should handle compiler options (if used)
-    export PKG_CONFIG_PATH="$path/lib/pkgconfig:$PKG_CONFIG_PATH"
+    export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$path/lib/pkgconfig"
   fi
 
   # standard paths
-  export CPPPATH="$path/include:$CPPPATH"
-  export CPATH="$path/include:$CPATH"
-  export LIBRARY_PATH="$path/lib:$LIBRARY_PATH"
+  export CPPPATH="$CPPPATH:$path/include"
+  export CPATH="$CPATH:$path/include"
+  export LIBRARY_PATH="$LIBRARY_PATH:$path/lib"
 
-  export LD_LIBRARY_PATH="$path/lib:$LD_LIBRARY_PATH"
+  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$path/lib"
 }
 
 echo "Vendoring binaries" | arrow
@@ -52,13 +52,13 @@ vendor "wget https://kespry-packages.s3.amazonaws.com/vips/$STACK/libvips-$versi
 
 echo "Tweaking glib include paths" | arrow
 
-export CPPPATH="$BUILD_DIR/vendor/vips/include/glib-2.0:$BUILD_DIR/vendor/vips/lib/glib-2.0/include:$CPPPATH"
-export CPATH="$BUILD_DIR/vendor/vips/include/glib-2.0:$BUILD_DIR/vendor/vips/lib/glib-2.0/include:$CPATH"
+export CPPPATH="$CPPPATH:$BUILD_DIR/vendor/vips/include/glib-2.0:$BUILD_DIR/vendor/vips/lib/glib-2.0/include"
+export CPATH="$CPATH:$BUILD_DIR/vendor/vips/include/glib-2.0:$BUILD_DIR/vendor/vips/lib/glib-2.0/include"
 
 echo "Configuring build environment" | arrow
 
 cat <<EOF > export
-export PATH="$PATH:\$PATH"
+export PATH="\$PATH:$PATH"
 export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:$LD_LIBRARY_PATH"
 export LIBRARY_PATH="\$LIBRARY_PATH:$LIBRARY_PATH"
 export PKG_CONFIG_PATH="\$PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
@@ -70,7 +70,7 @@ echo "Building runtime environment" | arrow
 mkdir -p $BUILD_DIR/.profile.d
 
 cat <<EOF > $BUILD_DIR/.profile.d/$BUILDPACK_NAME.sh
-export PATH="${PATH//$BUILD_DIR//app}:\$PATH"
+export PATH="\$PATH:${PATH//$BUILD_DIR//app}"
 export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:${LD_LIBRARY_PATH//$BUILD_DIR//app}"
 export LIBRARY_PATH="\$LIBRARY_PATH:${LIBRARY_PATH//$BUILD_DIR//app}"
 export PKG_CONFIG_PATH="\$PKG_CONFIG_PATH:${PKG_CONFIG_PATH//$BUILD_DIR//app}"
