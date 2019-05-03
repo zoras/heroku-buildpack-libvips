@@ -1,24 +1,52 @@
-heroku-buildpack-vips
+heroku-buildpack-libvips
 =====================
 
 Heroku buildpack with [libvips](https://github.com/jcupitt/libvips) installed.
 
-Current vips version is 8.0.0 with webp 0.4.0, libtiff 4.0.3, orc 0.4.18, fftw 3.3.4, libgsf 1.14.30, imagemagick 6.9.0 and lcms 2.6
+You can even use the [ruby-vips](https://github.com/libvips/ruby-vips) gem 😉
 
-## About libtiff use
+## Requirements
 
-We removed `libtiff.*` from the vips bundle because it's version (5.0) was conflicting with opencv (4.0). Removing `libtiff.*` made it use the user default's libtiff (5.0). Symbol names on the original vips bundle `libtiff.so` are wrong, they have versions appended, which causes the conflict.
+Important notes:
 
-The new bundle is available [here](https://s3-us-west-2.amazonaws.com/cdn.thegrid.io/caliper/libvips/libvips-build-0.0.2.tar.gz) and is currently used by us.
+In order to use this buildpack, you must install `glib-2.0` packages in your heroku application.
+
+The easiest way to do this is using the [heroku apt buildpack](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-apt).
+#### Command-line
+
+```
+heroku buildpacks:add --index 1 heroku-community/apt
+```
+#### Aptfile
+
+Create a new file named `Aptfile` in your app root directory and append the following packages:
+
+```
+libglib2.0-0
+libglib2.0-dev
+```
+
+You can add [extra packages](https://libvips.github.io/libvips/install.html#optional-dependencies) like `libjpeg` `libpng` `libtiff` `giflib` `libwebp` `libpoppler` and more.
+Get any [packages you may have missing](https://github.com/libvips/libvips/wiki/Build-for-Ubuntu#building-from-source).
 
 ## Usage
 
-Point the `BUILDPACK_URL` config or add to your `.buildpacks` this:
+1. Make sure the required `glib-2.0` [dependencies for libvips](https://libvips.github.io/libvips/install.html#dependencies) is fulfilled.
+2. Add this buildpack to your app:
+#### Command-line
+
+To use the latest stable version:
 
 ```
-https://github.com/automata/heroku-buildpack-vips.git
+heroku buildpacks:add --index 2 zoras/heroku-buildpack-libvips
+```
+
+To use the edge version (i.e. the code in this repo):
+
+```
+heroku buildpacks:add -i 2 https://github.com/zoras/heroku-buildpack-libvips
 ```
 
 ## Build script
 
-[This](./build.sh) is the script used to build vips on `heroku run bash`.
+[This](./build.sh) is the script used to build libvips.
