@@ -190,11 +190,11 @@ function build_libffi {
 ###############
 function build_glib {
     # Download glib dependency
-    curl -L http://ftp.gnome.org/pub/gnome/sources/glib/2.41/glib-2.41.1.tar.xz -o glib.tar.xz
+    curl -L http://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.58.3.orig.tar.xz -o glib.tar.xz
     # Unzip
     tar -xvf glib.tar.xz
     # Get into glib folder
-    cd glib-2.41.1
+    cd glib-2.58.3
     # Configure build
     ./configure --prefix $OUT_PATH
     # Make glib
