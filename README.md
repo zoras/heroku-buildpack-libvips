@@ -1,7 +1,7 @@
 heroku-buildpack-libvips
 =====================
 
-Heroku buildpack with [libvips](https://github.com/jcupitt/libvips) installed.
+Heroku buildpack with [libvips](https://libvips.github.io/libvips/) installed.
 
 You can even use the [ruby-vips](https://github.com/libvips/ruby-vips) gem 😉
 
@@ -31,7 +31,7 @@ Get any [packages you may have missing](https://github.com/libvips/libvips/wiki/
 
 ## Usage
 
-1. Make sure the required `glib-2.0` [dependencies for libvips](https://libvips.github.io/libvips/install.html#dependencies) is fulfilled.
+1. Make sure the required `glib-2.0` [dependency for libvips](https://libvips.github.io/libvips/install.html#dependencies) is fulfilled.
 2. Add this buildpack to your app:
 #### Command-line
 

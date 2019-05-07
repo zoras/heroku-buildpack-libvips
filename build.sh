@@ -3,13 +3,13 @@
 set -e
 
 # Set vips version
-export VIPS_VERSION=8.6.2
-export WEBP_VERSION=0.6.0
-export ORC_VERSION=0.4.18
-export TIFF_VERSION=4.0.3
-export GETTEXT_VERSION=0.19.1
-export SVG_VERSION=2.40.15
-export GIF_VERSION=5.1.4
+export VIPS_VERSION=8.8.0-rc1
+export WEBP_VERSION=1.0.2
+export ORC_VERSION=0.4.29
+export TIFF_VERSION=4.0.10
+export GETTEXT_VERSION=latest
+export SVG_VERSION=2.45.5
+export GIF_VERSION=5.1.9
 export BUILD_PATH=/tmp
 export OUT_PATH=$OUT_DIR/app/vendor/vips
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$OUT_PATH/lib/pkgconfig
@@ -172,11 +172,11 @@ function build_gettext {
 ###############
 function build_libffi {
     # Download libffi dependency
-    curl ftp://sourceware.org/pub/libffi/libffi-3.1.tar.gz -o libffi.tar.gz
+    curl ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz -o libffi.tar.gz
     # Unzip
     tar -xvf libffi.tar.gz
     # Get into libffi folder
-    cd libffi-3.1
+    cd libffi-3.2.1
     # Configure build
     ./configure --prefix $OUT_PATH
     # Make libffi
@@ -190,11 +190,11 @@ function build_libffi {
 ###############
 function build_glib {
     # Download glib dependency
-    curl -L http://ftp.gnome.org/pub/gnome/sources/glib/2.41/glib-2.41.1.tar.xz -o glib.tar.xz
+    curl -L https://github.com/GNOME/glib/archive/2.60.2.tar.gz -o glib.tar.gz
     # Unzip
-    tar -xvf glib.tar.xz
+    tar -xvf glib.tar.gz
     # Get into glib folder
-    cd glib-2.41.1
+    cd glib-2.60.2
     # Configure build
     ./configure --prefix $OUT_PATH
     # Make glib
@@ -227,11 +227,11 @@ function build_intltool {
 ###############
 function build_gsf {
     # Download libgsf dependency
-    curl -L http://ftp.gnome.org/pub/GNOME/sources/libgsf/1.14/libgsf-1.14.30.tar.xz -o libgsf.tar.xz
+    curl -L https://github.com/GNOME/libgsf/archive/LIBGSF_1_14_46.tar.gz -o libgsf.tar.gz
     # Unzip
-    tar -xvf libgsf.tar.xz
+    tar -xvf libgsf.tar.gz
     # Get into libgsf folder
-    cd libgsf-1.14.30
+    cd libgsf-LIBGSF_1_14_46
     # Configure build
     ./configure --prefix $OUT_PATH
     # Make gsf
@@ -245,7 +245,7 @@ function build_gsf {
 ###############
 function build_cftsio {
     # Download CFITSIO dependency
-    curl -L ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/cfitsio3370.tar.gz -o cfitsio.tar.gz
+    curl -L ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/cfitsio3450.tar.gz -o cfitsio.tar.gz
     # Unzip
     tar -xvf cfitsio.tar.gz
     # Get into CFITSIO folder
@@ -260,8 +260,8 @@ function build_cftsio {
 
 # SVG
 function build_svg {
-  curl -L https://download.gnome.org/sources/librsvg/2.40/librsvg-${SVG_VERSION}.tar.xz -o librsvg.tar.xz
-  tar -xvf librsvg.tar.xz
+  curl -L https://github.com/GNOME/librsvg/archive/${SVG_VERSION}.tar.gz -o librsvg.tar.gz
+  tar -xvf librsvg.tar.gz
   cd librsvg-${SVG_VERSION}
   ./configure --prefix $OUT_PATH --enable-shared --disable-static \
   --disable-dependency-tracking --disable-introspection --disable-tools
@@ -285,11 +285,11 @@ function build_gif {
 ###############
 function build_lcms2 {
     # Download lcms dependency
-    curl -L http://downloads.sourceforge.net/project/lcms/lcms/2.6/lcms2-2.6.tar.gz -o lcms.tar.gz
+    curl -L http://downloads.sourceforge.net/project/lcms/lcms/2.9/lcms2-2.9.tar.gz -o lcms.tar.gz
     # Unzip
     tar -xvf lcms.tar.gz
     # Get into lcms folder
-    cd lcms2-2.6
+    cd lcms2-2.9
     # Configure build
     ./configure --prefix $OUT_PATH
     # Make lcms
@@ -303,7 +303,7 @@ function build_lcms2 {
 ###############
 function build_vips {
     # Download vips runtime
-    curl -L https://github.com/jcupitt/libvips/releases/download/v$VIPS_VERSION/vips-$VIPS_VERSION.tar.gz -o vips.tar.gz
+    curl -L https://github.com/libvips/libvips/releases/download/v$VIPS_VERSION/vips-$VIPS_VERSION.tar.gz -o vips.tar.gz
     # Unzip
     tar -xvf vips.tar.gz
     # Get into vips folder
