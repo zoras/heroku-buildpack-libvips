@@ -50,3 +50,8 @@ heroku buildpacks:add -i 2 https://github.com/zoras/heroku-buildpack-libvips
 ## Build script
 
 [This](./build.sh) is the script used to build libvips.
+
+
+## Credit
+
+All previous committers and Heroku support team (esp @schneems)
